@@ -3,13 +3,12 @@
 Gameboard represents the state of the board
 Each square holds a Cell
 */
-
-
 function Gameboard() {
     const rows = 3;
     const columns = 3;
     const board = [];
 
+    // Initiating size of the game board
     for (let i = 0; i < rows; i++) {
         board[i] = [];
         for (let j = 0; j < columns; j++) {
@@ -17,7 +16,21 @@ function Gameboard() {
         }
     }
 
-    return board;
+    // Method to get the entire board to render on UI
+    const getBoard = () => board;
+
+
+    // Mark Cell method
+    const markBoard = (player, row, column) => {
+        // Need to identify if available slot is available on board
+        if(board[row][column].getValue() === 0) {
+            board[row][column].addToken(player);
+        } else {
+            console.log('Invalid Move');
+        }
+    }
+
+    return {board, getBoard, markBoard};
 }
 
 /*
@@ -37,22 +50,15 @@ function Cell(){
     const getValue = () => value;
 
     return {addToken, getValue};
-    
 }
 
-myBoard = Gameboard();
+const board = Gameboard();
+board.markBoard(2, 1, 1);
 
+const boardView = board.getBoard();
 
-// Visualisation Test v1
-function displayBoard(myBoard) {
-    // Will be called-out after every movement
-    console.log(`${myBoard[0][0].getValue()} ${myBoard[0][1].getValue()} ${myBoard[0][2].getValue()} \n${myBoard[1][1].getValue()} ${myBoard[1][1].getValue()} ${myBoard[1][1].getValue()} \n${myBoard[2][1].getValue()} ${myBoard[2][1].getValue()} ${myBoard[2][1].getValue()} \n `);
-}
+console.log(`${boardView[0][0].getValue()} ${boardView[0][1].getValue()} ${boardView[0][2].getValue()} \n${boardView[1][0].getValue()} ${boardView[1][1].getValue()} ${boardView[1][2].getValue()} \n${boardView[2][0].getValue()} ${boardView[2][1].getValue()} ${boardView[2][2].getValue()}`);
 
-let gameInProgress = false;
+board.markBoard(2, 2, 1);
 
-while(gameInProgress) {
-
-    displayBoard(myBoard);
-
-}
+console.log(`${boardView[0][0].getValue()} ${boardView[0][1].getValue()} ${boardView[0][2].getValue()} \n${boardView[1][0].getValue()} ${boardView[1][1].getValue()} ${boardView[1][2].getValue()} \n${boardView[2][0].getValue()} ${boardView[2][1].getValue()} ${boardView[2][2].getValue()}`);
