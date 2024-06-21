@@ -109,9 +109,19 @@ function GameController(
                 // break
             }; 
 
+            // Check every columns
+            // Temporary Column Array to collect all cell values
+            let columnArray = [];
             for(let j = 0; j < board.getBoard().length; j++){
-                
+                columnArray.push(board.board[j][i])  //
             }
+            
+            // Evaluate if each cell in the column is equal to player's token.
+            if(columnArray.every((cells) => cells.getValue() === getActivePlayer().token)) {
+                console.log(`${getActivePlayer().name} wins`);
+                // break
+            }
+            
         }
 
         // Switch player turn
@@ -130,8 +140,9 @@ function GameController(
 }
 
 const game = GameController();
-game.playRound(0, 1);
-game.playRound(1, 0);
-game.playRound(0, 2);
-game.playRound(1, 1);
-game.playRound(0, 0);
+game.playRound(0, 0);   // p1
+game.playRound(1, 1);   // p2
+game.playRound(1, 0);   // p1
+game.playRound(1, 1);   // p2
+game.playRound(2, 0);   // p1
+game.playRound(0, 0);   // p2
