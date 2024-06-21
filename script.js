@@ -30,6 +30,12 @@ function Gameboard() {
         }
     }
 
+    // Print Board (For Console Test only)
+    const printBoard = () => {
+        const boardWithCellValues = board.map((rows) => rows.map((cells) => cells.getValue()));
+        console.log(boardWithCellValues);
+    }
+
     return {board, getBoard, markBoard};
 }
 
@@ -57,8 +63,14 @@ board.markBoard(2, 1, 1);
 
 const boardView = board.getBoard();
 
-console.log(`${boardView[0][0].getValue()} ${boardView[0][1].getValue()} ${boardView[0][2].getValue()} \n${boardView[1][0].getValue()} ${boardView[1][1].getValue()} ${boardView[1][2].getValue()} \n${boardView[2][0].getValue()} ${boardView[2][1].getValue()} ${boardView[2][2].getValue()}`);
 
 board.markBoard(2, 2, 1);
 
-console.log(`${boardView[0][0].getValue()} ${boardView[0][1].getValue()} ${boardView[0][2].getValue()} \n${boardView[1][0].getValue()} ${boardView[1][1].getValue()} ${boardView[1][2].getValue()} \n${boardView[2][0].getValue()} ${boardView[2][1].getValue()} ${boardView[2][2].getValue()}`);
+
+
+board.markBoard(1, 2, 2);
+
+
+
+const boardPrint = board.board.map((row) => row.map((cell) => cell.getValue()));
+console.log(boardPrint);
