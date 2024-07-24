@@ -97,32 +97,61 @@ function GameController(
     const playRound = (row, column) => {
         // Mark the cell for the current player
         console.log(`${getActivePlayer().name} marked row ${row}, column ${column}`);
-
         board.markBoard(getActivePlayer().token, row, column);
 
-        // Evaluate the board if there is a winner.
+        // Evaluate the board if it's the winning move
+        // Verticals and Horizontals        
         for(let i = 0; i < board.getBoard().length; i++){
-            // Check every rows
-            // If the value of each cells in the row is equal to player's token. The player wins
-            if(board.board[i].every((cells) => cells.getValue() === getActivePlayer().token)){
-                console.log(`${getActivePlayer().name} wins`);
-                // break
-            }; 
 
-            // Check every columns
-            // Temporary Column Array to collect all cell values
-            let columnArray = [];
+            // Checking every rows
+            let horizontalRowArray = [];
+            board.board[i].forEach(cells => horizontalRowArray.push(cells.getValue()));
+
+            // Checking every columns
+            let verticalColumnArray = [];
             for(let j = 0; j < board.getBoard().length; j++){
-                columnArray.push(board.board[j][i])  //
+                verticalColumnArray.push(board.board[j][i].getValue())  //
             }
             
-            // Evaluate if each cell in the column is equal to player's token.
-            if(columnArray.every((cells) => cells.getValue() === getActivePlayer().token)) {
-                console.log(`${getActivePlayer().name} wins`);
-                // break
+            // Evaluate current row if every cell is equal to current player's token
+            console.log(`horizontal array: ${horizontalRowArray}`);
+            console.log(horizontalRowArray.every((cell) => cell === getActivePlayer().token))
+
+
+            // Evaluate current column if every cell is equal to current player's token
+            console.log(`vertical array ${verticalColumnArray}`);
+            console.log(verticalColumnArray.every((cell) => cell === getActivePlayer().token))
+
+            // If every cell in row i or column j has the same value as active player token,
+            // that player wins. Then end the game loop.
+            if(horizontalRowArray.every((cell) => cell === getActivePlayer().token) || 
+               verticalColumnArray.every((cell) => cell === getActivePlayer().token)) {
+                
+                console.log(`${getActivePlayer().name} wins`); // Should 'return' from here
+                return getActivePlayer().name;
             }
             
         }
+
+        // Diagonals
+        // Temporary store to diagonalArray to collect all cell values
+        let diagonalNortEastArray = [];
+        let diagonalNorthWestArray = [];
+
+        for(let i = 0; i < board.getBoard().length; i++){
+            diagonalNorthWestArray.push(board.board[i][i].getValue());
+            diagonalNortEastArray.push(board.board[i][board.getBoard().length - i - 1].getValue());
+        }
+
+        if(diagonalNorthWestArray.every((cell) => cell === getActivePlayer().token) ||
+           diagonalNortEastArray.every((cell) => cell === getActivePlayer().token)) {
+
+            console.log(`${getActivePlayer().name} wins`); // Should 'return' from here
+            return getActivePlayer().name;
+
+           }
+
+        
 
         // Switch player turn
         switchPlayerTurn();
