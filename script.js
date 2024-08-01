@@ -173,18 +173,36 @@ function GameController(
 
 const game = GameController();
 
-game.playRound(0, 0);   // p1
+// game.playRound(0, 0);   // p1
+// game.playRound(1, 1);   // p2
+// game.playRound(1, 0);   // p1
+// game.playRound(1, 1);   // p2 - which is invalid move
+// game.playRound(2, 0);   // p1
+// game.playRound(0, 0);   // p2
+// game.playRound(0, 0);   // p2
+// game.playRound(0, 0);   // p2
 
-game.playRound(1, 1);   // p2
+// Create the 3 by 3 Board
+const gridContainerDiv = document.querySelector('.gridContainer');
 
-game.playRound(1, 0);   // p1
+function generateGrid() {
+    let gridSize = 3;
 
-game.playRound(1, 1);   // p2 - which is invalid move
+    for(let rowContainer = 0; rowContainer < gridSize; rowContainer++){
+        const cellDivRow = document.createElement('div');
+        cellDivRow.classList.add('cellDivRow');
+        gridContainerDiv.appendChild(cellDivRow);
 
-game.playRound(2, 0);   // p1
 
-game.playRound(0, 0);   // p2
+        for(let cell = 0; cell < gridSize; cell++){
+            const cellDivCol = document.createElement('div');
+            cellDivCol.classList.add('cell');
+            cellDivRow.appendChild(cellDivCol);
+        }
 
-game.playRound(0, 0);   // p2
+    }
 
-game.playRound(0, 0);   // p2
+    
+}
+
+generateGrid();
